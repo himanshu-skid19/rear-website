@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REAR - Explore Examples</title>
+<style>
+* {box-sizing: border-box}
+body {
+  font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif; 
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+.header p {
+  margin: 10px 0 0 0;
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.mySlides {display: none}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1200px;
+  position: relative;
+  margin: 30px auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.slide-content {
+  padding: 20px;
+}
+
+.slide-title {
+  font-size: 1.8em;
+  color: #667eea;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.query-box {
+  background: #f8f9fa;
+  border-left: 4px solid #667eea;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+.query-box strong {
+  color: #667eea;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.stage-container {
+  margin: 20px 0;
+}
+
+.stage {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.stage-header {
+  font-weight: bold;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.retrieve-stage { background: #4CAF50; }
+.expand-stage { background: #2196F3; }
+.refine-stage { background: #FF9800; }
+
+.table-list {
+  list-style: none;
+  padding: 0;
+}
+
+.table-list li {
+  padding: 8px 12px;
+  margin: 5px 0;
+  background: #f5f5f5;
+  border-radius: 5px;
+  border-left: 3px solid #667eea;
+}
+
+.table-list li.new-table {
+  background: #e3f2fd;
+  border-left-color: #2196F3;
+  font-weight: 500;
+}
+
+.table-list li.removed-table {
+  background: #ffebee;
+  border-left-color: #f44336;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.metrics {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.metric {
+  background: #667eea;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  background: rgba(102, 126, 234, 0.8);
+  font-weight: bold;
+  font-size: 24px;
+  transition: 0.3s ease;
+  border-radius: 0 5px 5px 0;
+  user-select: none;
+  z-index: 100;
+}
+
+.next {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.prev:hover, .next:hover {
+  background: rgba(102, 126, 234, 1);
+}
+
+/* Number text */
+.numbertext {
+  color: #666;
+  font-size: 14px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 5px;
+}
+
+/* The dots/bullets/indicators */
+.dot-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.active, .dot:hover {
+  background-color: #667eea;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 0.5s;
+  animation-name: fade;
+  animation-duration: 0.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: 0.4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: 0.4} 
+  to {opacity: 1}
+}
+
+.back-link {
+  text-align: center;
+  margin: 20px;
+}
+
+.back-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 768px) {
+  .header h1 { font-size: 1.8em; }
+  .header p { font-size: 1em; }
+  .slide-title { font-size: 1.4em; }
+  .metrics { flex-direction: column; }
+  .metric { min-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔍 REAR: Explore Examples</h1>
+  <p>Interactive examples of multi-table retrieval with Retrieve, Expand, and Refine stages</p>
+</div>
+
+<div class="slideshow-container">
+
+<!-- Example 1 -->
+<div class="mySlides fade">
+  <div class="numbertext">1 / 5</div>
+  <div class="slide-content">
+    <div class="slide-title">Example 1: Financial Database Query</div>
+    
+    <div class="query-box">
+      <strong>Query:</strong>
+      "Find the total revenue of companies that have offices in California and had more than 100 employees in 2023"
+    </div>
+
+    <div class="stage-container">
+      <div class="stage">
+        <div class="stage-header retrieve-stage">Stage 1: Retrieve (Top-5 by Query Relevance)</div>
+        <ul class="table-list">
+          <li>companies (columns: id, name, founded_year, industry)</li>
+          <li>revenue (columns: company_id, year, amount, currency)</li>
+          <li>employees (columns: company_id, year, count, type)</li>
+          <li>stock_prices (columns: company_id, date, price)</li>
+          <li>products (columns: id, company_id, name, price)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 60%</div>
+          <div class="metric">Precision: 40%</div>
+          <div class="metric">Missing: offices table</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header expand-stage">Stage 2: Expand (Add 3 Joinable Tables)</div>
+        <ul class="table-list">
+          <li>companies</li>
+          <li>revenue</li>
+          <li>employees</li>
+          <li>stock_prices</li>
+          <li>products</li>
+          <li class="new-table">offices (company_id, location, address) ✓ Joinable via company_id</li>
+          <li class="new-table">locations (id, city, state, country) ✓ Joinable via location</li>
+          <li class="new-table">company_metrics (company_id, year, kpi) ✓ Joinable via company_id</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 25%</div>
+          <div class="metric">Candidates: 8 tables</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header refine-stage">Stage 3: Refine (Final Top-5)</div>
+        <ul class="table-list">
+          <li>companies</li>
+          <li>revenue</li>
+          <li>employees</li>
+          <li class="removed-table">stock_prices (low query relevance)</li>
+          <li class="removed-table">products (low query relevance)</li>
+          <li class="new-table">offices ✓</li>
+          <li class="new-table">locations ✓</li>
+          <li class="removed-table">company_metrics (low joinability score)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 80%</div>
+          <div class="metric">SQL Success: ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example 2 -->
+<div class="mySlides fade">
+  <div class="numbertext">2 / 5</div>
+  <div class="slide-content">
+    <div class="slide-title">Example 2: E-commerce Database Query</div>
+    
+    <div class="query-box">
+      <strong>Query:</strong>
+      "List all customers who purchased electronics products with a discount and wrote reviews with ratings above 4 stars"
+    </div>
+
+    <div class="stage-container">
+      <div class="stage">
+        <div class="stage-header retrieve-stage">Stage 1: Retrieve (Top-5 by Query Relevance)</div>
+        <ul class="table-list">
+          <li>customers (id, name, email, registration_date)</li>
+          <li>products (id, name, category, price)</li>
+          <li>reviews (id, product_id, customer_id, rating, text)</li>
+          <li>categories (id, name, parent_id)</li>
+          <li>discounts (id, product_id, percentage, valid_until)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 80%</div>
+          <div class="metric">Precision: 60%</div>
+          <div class="metric">Missing: orders table</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header expand-stage">Stage 2: Expand (Add 3 Joinable Tables)</div>
+        <ul class="table-list">
+          <li>customers</li>
+          <li>products</li>
+          <li>reviews</li>
+          <li>categories</li>
+          <li>discounts</li>
+          <li class="new-table">orders (id, customer_id, order_date, total) ✓ Joinable</li>
+          <li class="new-table">order_items (order_id, product_id, quantity) ✓ Joinable</li>
+          <li class="new-table">payments (order_id, method, amount) ✓ Joinable</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 28%</div>
+          <div class="metric">Candidates: 8 tables</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header refine-stage">Stage 3: Refine (Final Top-5)</div>
+        <ul class="table-list">
+          <li>customers</li>
+          <li>products</li>
+          <li>reviews</li>
+          <li class="removed-table">categories (redundant)</li>
+          <li>discounts</li>
+          <li class="new-table">orders ✓</li>
+          <li class="new-table">order_items ✓</li>
+          <li class="removed-table">payments (low query relevance)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 83%</div>
+          <div class="metric">SQL Success: ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example 3 -->
+<div class="mySlides fade">
+  <div class="numbertext">3 / 5</div>
+  <div class="slide-content">
+    <div class="slide-title">Example 3: University Database Query</div>
+    
+    <div class="query-box">
+      <strong>Query:</strong>
+      "Find professors who teach courses with enrollment over 50 students and are in the Computer Science department"
+    </div>
+
+    <div class="stage-container">
+      <div class="stage">
+        <div class="stage-header retrieve-stage">Stage 1: Retrieve (Top-5 by Query Relevance)</div>
+        <ul class="table-list">
+          <li>professors (id, name, title, hire_date)</li>
+          <li>courses (id, name, credits, level)</li>
+          <li>departments (id, name, building, budget)</li>
+          <li>students (id, name, major, enrollment_year)</li>
+          <li>buildings (id, name, capacity, location)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 60%</div>
+          <div class="metric">Precision: 40%</div>
+          <div class="metric">Missing: enrollment data</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header expand-stage">Stage 2: Expand (Add 3 Joinable Tables)</div>
+        <ul class="table-list">
+          <li>professors</li>
+          <li>courses</li>
+          <li>departments</li>
+          <li>students</li>
+          <li>buildings</li>
+          <li class="new-table">enrollments (student_id, course_id, semester) ✓</li>
+          <li class="new-table">teaches (professor_id, course_id, semester) ✓</li>
+          <li class="new-table">dept_membership (professor_id, dept_id) ✓</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 25%</div>
+          <div class="metric">Candidates: 8 tables</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header refine-stage">Stage 3: Refine (Final Top-5)</div>
+        <ul class="table-list">
+          <li>professors</li>
+          <li>courses</li>
+          <li>departments</li>
+          <li class="removed-table">students (not needed)</li>
+          <li class="removed-table">buildings (low relevance)</li>
+          <li class="new-table">enrollments ✓</li>
+          <li class="new-table">teaches ✓</li>
+          <li class="new-table">dept_membership ✓</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 100%</div>
+          <div class="metric">SQL Success: ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example 4 -->
+<div class="mySlides fade">
+  <div class="numbertext">4 / 5</div>
+  <div class="slide-content">
+    <div class="slide-title">Example 4: Healthcare Database Query</div>
+    
+    <div class="query-box">
+      <strong>Query:</strong>
+      "Find patients who had appointments with cardiologists in 2023 and were prescribed beta-blockers"
+    </div>
+
+    <div class="stage-container">
+      <div class="stage">
+        <div class="stage-header retrieve-stage">Stage 1: Retrieve (Top-5 by Query Relevance)</div>
+        <ul class="table-list">
+          <li>patients (id, name, dob, insurance_id)</li>
+          <li>doctors (id, name, specialty, hospital_id)</li>
+          <li>appointments (id, patient_id, doctor_id, date)</li>
+          <li>medications (id, name, type, manufacturer)</li>
+          <li>hospitals (id, name, address, type)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 80%</div>
+          <div class="metric">Precision: 60%</div>
+          <div class="metric">Missing: prescriptions</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header expand-stage">Stage 2: Expand (Add 3 Joinable Tables)</div>
+        <ul class="table-list">
+          <li>patients</li>
+          <li>doctors</li>
+          <li>appointments</li>
+          <li>medications</li>
+          <li>hospitals</li>
+          <li class="new-table">prescriptions (id, patient_id, medication_id, date) ✓</li>
+          <li class="new-table">medication_classes (medication_id, class_name) ✓</li>
+          <li class="new-table">diagnoses (appointment_id, code, description) ✓</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 28%</div>
+          <div class="metric">Candidates: 8 tables</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header refine-stage">Stage 3: Refine (Final Top-5)</div>
+        <ul class="table-list">
+          <li>patients</li>
+          <li>doctors</li>
+          <li>appointments</li>
+          <li>medications</li>
+          <li class="removed-table">hospitals (low relevance)</li>
+          <li class="new-table">prescriptions ✓</li>
+          <li class="new-table">medication_classes ✓</li>
+          <li class="removed-table">diagnoses (not required)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 83%</div>
+          <div class="metric">SQL Success: ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Example 5 -->
+<div class="mySlides fade">
+  <div class="numbertext">5 / 5</div>
+  <div class="slide-content">
+    <div class="slide-title">Example 5: Social Media Database Query</div>
+    
+    <div class="query-box">
+      <strong>Query:</strong>
+      "Find users who posted content with hashtags related to 'AI' and received more than 100 likes from verified users"
+    </div>
+
+    <div class="stage-container">
+      <div class="stage">
+        <div class="stage-header retrieve-stage">Stage 1: Retrieve (Top-5 by Query Relevance)</div>
+        <ul class="table-list">
+          <li>users (id, username, email, verified, join_date)</li>
+          <li>posts (id, user_id, content, timestamp)</li>
+          <li>hashtags (id, name, category)</li>
+          <li>likes (id, user_id, post_id, timestamp)</li>
+          <li>comments (id, user_id, post_id, text)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 60%</div>
+          <div class="metric">Precision: 40%</div>
+          <div class="metric">Missing: post-hashtag link</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header expand-stage">Stage 2: Expand (Add 3 Joinable Tables)</div>
+        <ul class="table-list">
+          <li>users</li>
+          <li>posts</li>
+          <li>hashtags</li>
+          <li>likes</li>
+          <li>comments</li>
+          <li class="new-table">post_hashtags (post_id, hashtag_id) ✓ Joinable</li>
+          <li class="new-table">user_followers (follower_id, following_id) ✓ Joinable</li>
+          <li class="new-table">post_metrics (post_id, views, shares) ✓ Joinable</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 25%</div>
+          <div class="metric">Candidates: 8 tables</div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="stage-header refine-stage">Stage 3: Refine (Final Top-5)</div>
+        <ul class="table-list">
+          <li>users</li>
+          <li>posts</li>
+          <li>hashtags</li>
+          <li>likes</li>
+          <li class="removed-table">comments (not needed)</li>
+          <li class="new-table">post_hashtags ✓</li>
+          <li class="removed-table">user_followers (low relevance)</li>
+          <li class="removed-table">post_metrics (not required)</li>
+        </ul>
+        <div class="metrics">
+          <div class="metric">Recall: 100%</div>
+          <div class="metric">Precision: 80%</div>
+          <div class="metric">SQL Success: ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+
+<div class="dot-container">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide(4)"></span> 
+  <span class="dot" onclick="currentSlide(5)"></span> 
+</div>
+
+<div class="back-link">
+  <a href="index.html">← Back to Main Page</a>
+</div>
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'ArrowLeft') {
+    plusSlides(-1);
+  } else if (event.key === 'ArrowRight') {
+    plusSlides(1);
+  }
+});
+</script>
+
+</body>
+</html>
