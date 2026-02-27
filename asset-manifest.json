@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/REaR/static/css/main.40a5d89b.css",
+    "main.js": "/REaR/static/js/main.ded8c97d.js",
+    "index.html": "/REaR/index.html",
+    "main.40a5d89b.css.map": "/REaR/static/css/main.40a5d89b.css.map",
+    "main.ded8c97d.js.map": "/REaR/static/js/main.ded8c97d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.40a5d89b.css",
+    "static/js/main.ded8c97d.js"
+  ]
+}
